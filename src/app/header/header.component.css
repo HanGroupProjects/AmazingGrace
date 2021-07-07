@@ -1,0 +1,10 @@
+mat-toolbar {
+  display: flex;
+  height: 8rem;
+}
+
+.header-content {
+  font-size: 40px;
+  flex: 1 1 auto;
+  text-align: center;
+}

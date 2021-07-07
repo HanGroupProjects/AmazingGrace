@@ -1,0 +1,44 @@
+<mat-progress-bar [value]="percentage" color="accent"></mat-progress-bar>
+
+<mat-horizontal-stepper linear #stepper>
+  <mat-step>
+      <ng-template matStepLabel>Select body type</ng-template>
+      <!-- <mat-checkbox
+        *ngFor="let type of bodyTypes; index as i"
+        class="item"
+        [formControlName]="bodyTypeVars[i]"
+      >
+        <img scr="" width="200" height="300" />
+        <div>{{ type }}</div>
+      </mat-checkbox> -->
+      <button mat-button *ngFor="let type of bodyTypes" class="item" (click)="onClickBodyType(type)" matStepperNext>
+        <img scr="" width="200" height="300"/>
+        <div> {{ type }}</div>
+      </button>
+  </mat-step>
+
+  <mat-step [stepControl]="questionFg">
+    <form [formGroup]="questionFg">
+      <ng-template matStepLabel>Some questions About You!</ng-template>
+
+      <div *ngFor="let question of questions.questions; index as i" [ngSwitch]="question.type">
+        <div *ngSwitchCase="'radio'">
+          <label> {{ question.label }}</label>
+          <mat-radio-group required [formControlName]="questions.questions[i].value" required>
+            <mat-radio-button *ngFor="let option of questions.questions[i].options" [value]="option">
+              {{ option }}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div *ngSwitchCase="'input'">
+          <label> {{ question.label }}</label>
+
+
+        </div>
+      </div>
+      <button mat-button color="primary" (click)="setActive(active - 1)" matStepperPrevious>Previous</button>
+      <button mat-button color="primary" (click)="onSubmit()" matStepperNext>Next</button>
+    </form>
+  </mat-step>
+</mat-horizontal-stepper>
