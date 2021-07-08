@@ -24,6 +24,10 @@ export class SurveyComponent implements OnInit {
   active = 0;
   percentage = 0;
 
+  feet: number;
+  inches: number;
+  weight: number;
+
   constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
@@ -70,6 +74,10 @@ export class SurveyComponent implements OnInit {
 
 
   onSubmit() {
+    this.feet = +(<HTMLInputElement>document.getElementById('feet')).value;
+    this.inches = +(<HTMLInputElement>document.getElementById('inches')).value;
+    this.questionFg.controls['height'].setValue({feet: this.feet, inches: this.inches});
+
     console.log(this.selectedType);
     console.log(this.questionFg.value);
   }

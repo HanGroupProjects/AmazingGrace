@@ -3,29 +3,24 @@
 <mat-horizontal-stepper linear #stepper>
   <mat-step>
       <ng-template matStepLabel>Select body type</ng-template>
-      <!-- <mat-checkbox
-        *ngFor="let type of bodyTypes; index as i"
-        class="item"
-        [formControlName]="bodyTypeVars[i]"
-      >
-        <img scr="" width="200" height="300" />
-        <div>{{ type }}</div>
-      </mat-checkbox> -->
+    <div class="button-container">
       <button mat-button *ngFor="let type of bodyTypes" class="item" (click)="onClickBodyType(type)" matStepperNext>
         <img scr="" width="200" height="300"/>
         <div> {{ type }}</div>
       </button>
+    </div>
   </mat-step>
 
   <mat-step [stepControl]="questionFg">
     <form [formGroup]="questionFg">
       <ng-template matStepLabel>Some questions About You!</ng-template>
-
-      <div *ngFor="let question of questions.questions; index as i" [ngSwitch]="question.type">
+      <div class="question-container">
+      <div *ngFor="let question of questions.questions; index as i" [ngSwitch]="question.type" class="question-question">
         <div *ngSwitchCase="'radio'">
           <label> {{ question.label }}</label>
+          <br>
           <mat-radio-group required [formControlName]="questions.questions[i].value" required>
-            <mat-radio-button *ngFor="let option of questions.questions[i].options" [value]="option">
+            <mat-radio-button class="question-radio-options" *ngFor="let option of questions.questions[i].options" [value]="option">
               {{ option }}
             </mat-radio-button>
           </mat-radio-group>
@@ -33,12 +28,19 @@
 
         <div *ngSwitchCase="'input'">
           <label> {{ question.label }}</label>
+          <div *ngIf="question.value === 'height'">
+            <input placeholder="ft" name="feet" id="feet" type="number" step="1"> <input placeholder="inches" id="inches" name="inches" type="number" step="1">
+          </div>
+          <div *ngIf="question.value === 'weight'">
+            <input placeholder="lbs" name="weight" [formControlName]="questions.questions[i].value" type="number" step="1">
+          </div>
 
 
         </div>
       </div>
       <button mat-button color="primary" (click)="setActive(active - 1)" matStepperPrevious>Previous</button>
       <button mat-button color="primary" (click)="onSubmit()" matStepperNext>Next</button>
+    </div>
     </form>
   </mat-step>
 </mat-horizontal-stepper>
